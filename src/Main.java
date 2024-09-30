@@ -10,11 +10,14 @@ public class Main {
 
 
 
-        TraversalType.preOrder(tree.getRoot());
+        TraversalType.preOrder(System.out::println, tree.getRoot());
         System.out.println("-----------------------------");
-        TraversalType.postOrder(tree.getRoot());
+        TraversalType.postOrder(System.out::println, tree.getRoot());
         System.out.println("-----------------------------");
-        TraversalType.inOrder(tree.getRoot());
+        TraversalType.inOrder(System.out::println,tree.getRoot());
+        System.out.println("-----------------------------");
+        System.out.println("This is levelOrder with Consumer");
+        TraversalType.leverOrder(c -> System.out.println(c), tree.getRoot());
         System.out.println("-----------------------------");
         System.out.println("Height of this tree is: "+recursiveHeight(tree.getRoot()));
     }

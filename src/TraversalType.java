@@ -1,34 +1,36 @@
 import java.util.LinkedList;
+import java.util.function.Consumer;
 
 public class TraversalType {
 
-    public static <E> void postOrder(Node<E> node) {
+    public static <E> void postOrder(Consumer<E> c, Node<E> node) {
         for (Node<E> child : node.getChildren()) {
-            postOrder(child);
+            postOrder(c, child);
         }
-        System.out.println(node.getValue());
+        c.accept(node.getValue());
     }
 
-    public static <E> void inOrder(Node<E> node) {
+    public static <E> void inOrder(Consumer<E> c, Node<E> node) {
 
     }
 
     //Must have height of tree?????
-    public static <E> void leverOrder(Node<E> root){
+    public static <E> void leverOrder(Consumer<E> c, Node<E> root){
         LinkedList<Node<E>> queue = new LinkedList<>();
         queue.add(root);
         while(!queue.isEmpty()){
             Node<E> n = queue.remove();
+            c.accept(n.getValue());
             for(Node<E> child : n.getChildren()){
                 queue.add(child);
             }
         }
     }
 
-    public static <E> void preOrder(Node<E> node) {
-        System.out.println(node.getValue());
+    public static <E> void preOrder(Consumer<E> c, Node<E> node) {
+        c.accept(node.getValue());
         for (Node<E> child : node.getChildren()) {
-            preOrder(child);
+            preOrder(c, child);
         }
     }
 }
