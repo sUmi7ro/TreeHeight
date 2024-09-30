@@ -16,7 +16,7 @@ public class Main {
         System.out.println("-----------------------------");
         TraversalType.inOrder(tree.getRoot());
         System.out.println("-----------------------------");
-        System.out.println("Height of this tree is: "+getHeight(tree.getRoot()));
+        System.out.println("Height of this tree is: "+recursiveHeight(tree.getRoot()));
     }
 
     public static void createNodes(Tree<Character> tree){
@@ -32,11 +32,21 @@ public class Main {
         Node<Character> nC = tree.addNode('c', new LinkedList<>());
         Node<Character> nB = tree.addNode('b', new LinkedList<>());
 
+        Node<Character> nL = tree.addNode('l', new LinkedList<>());
+        Node<Character> nM = tree.addNode('m', new LinkedList<>());
+        Node<Character> nN = tree.addNode('n', new LinkedList<>());
+
 
         nB.addChild(nD);
         nB.addChild(nE);
 
         nC.addChild(nF);
+
+        nF.addChild(nL);
+
+        nL.addChild(nM);
+
+        nM.addChild(nN);
 
         nD.addChild(nG);
         nD.addChild(nH);
@@ -50,7 +60,7 @@ public class Main {
         rootNode.addChild(nC);
     }
 
-    public static void createRandomNodes(Tree<Character> tree){
+    public static <E> void createRandomNodes(Node<E> node){
         Random rand = new Random();
         int randNum = rand.nextInt(3)+1;
 
@@ -61,18 +71,15 @@ public class Main {
     }
 
 
-    public static <E> int getHeight(Tree<E> tree){
-        return recursiveHeight(tree.getRoot())-1;
-    }
-
     public static <E> int recursiveHeight(Node<E> node){
         int height = 0;
 
         if(node.getChildren().isEmpty()) return 1;
         for(Node<E> child : node.getChildren()){
             int childH = recursiveHeight(child);
-            if(childH > height) height = childH;
+            if(childH > height) height = childH+1;
         }
+        System.out.println(node.getValue() + " height is " + height);
         return height;
     }
 
@@ -80,7 +87,7 @@ public class Main {
     public static enum DepthFirstTraversalType{
         PREORDER, INORDER, POSTORDER
     }
-/*
+    /*
     public <E> void traverseDepthFirst(Consumer<E> c, Node<E> n, DepthFirstTraversalType tOrder){
         if(n == null) return;
         if(tOrder == DepthFirstTraversalType.PREORDER) {
